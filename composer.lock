@@ -56,6 +56,10 @@
                 "testing",
                 "unit test"
             ],
+            "support": {
+                "issues": "https://github.com/crysalead/kahlan/issues",
+                "source": "https://github.com/crysalead/kahlan/tree/1.3"
+            },
             "abandoned": "kahlan/kahlan",
             "time": "2016-05-01T23:20:41+00:00"
         }
@@ -66,5 +70,6 @@
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": [],
-    "platform-dev": []
+    "platform-dev": [],
+    "plugin-api-version": "2.0.0"
 }

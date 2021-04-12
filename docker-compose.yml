@@ -1,0 +1,8 @@
+version: '3.9'
+services:
+  elucidat:
+    build: .
+    ports:
+      - "81:80"
+    volumes:
+      - ./:/var/www/html
