@@ -26,6 +26,16 @@ to install the testing framework (we're using [Kahlan library](http://kahlan.rea
 ./vendor/bin/kahlan
 ```
 
+### Using Docker (optional)
+Install docker and run 
+
+```
+docker-compose up -d
+```
+
+You'll have an instance of PHP7.1 installed.
+You can then run the above composer update and tests within your new container.
+
 ## Specifications
 
 Hi and welcome to team Gilded Rose. As you know, we are a small inn with a prime location in a
