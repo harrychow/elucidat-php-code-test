@@ -14,6 +14,7 @@ class GildedRose
     const BACKSTAGE_PASSES = 'Backstage passes to a TAFKAL80ETC concert';
     const BACKSTAGE_PASS_QUALITY_INC_2 = 10;
     const BACKSTAGE_PASS_QUALITY_INC_3 = 5;
+    const MANA_CAKE = 'Conjured Mana Cake';
 
     /**
      * GildedRose constructor.
@@ -42,12 +43,15 @@ class GildedRose
     public function nextDay()
     {
         foreach ($this->items as $item) {
+            // No need to update legendary item, as it never has to be sold or decreases in quality
             if ($this->isLegendary($item)) {
                 continue;
             }
 
             $this->updateQuality($item);
             --$item->sellIn;
+
+            // If the sellin days has passed, we need to update quality once more, with different rules.
             if ($item->sellIn < self::MIN_SELLIN) {
                 $this->updateQuality($item, true);
             }
@@ -65,6 +69,16 @@ class GildedRose
     }
 
     /**
+     * Check whether the item is a conjured item
+     *
+     * @param $item
+     * @return bool
+     */
+    private function isConjured($item) {
+        return $item->name === self::MANA_CAKE;
+    }
+
+    /**
      *
      * Update item quality value
      *
@@ -78,17 +92,9 @@ class GildedRose
         if ($item->name === self::BRIE) {
             $quality = 1;
         } else if ($item->name === self::BACKSTAGE_PASSES) {
-            $quality = 1;
-            if ($passed_sell_in) {
-                $quality = -($item->quality);
-            } else {
-                if ($item->sellIn <= self::BACKSTAGE_PASS_QUALITY_INC_2) {
-                    $quality = 2;
-                }
-                if ($item->sellIn <= self::BACKSTAGE_PASS_QUALITY_INC_3) {
-                    $quality = 3;
-                }
-            }
+            $quality = $this->getBackstagePassQuality($item, $passed_sell_in);
+        } else if ($this->isConjured($item)) {
+            $quality = -2;
         } else {
             $quality = -1;
         }
@@ -102,4 +108,28 @@ class GildedRose
         }
     }
 
+    /**
+     * Backstage pass quality check
+     *
+     * Returns the quality of a backstage pass based on sellin days or whether it has passed
+     *
+     * @param $item
+     * @param $passed_sell_in
+     * @return float|int
+     */
+    private function getBackstagePassQuality($item, $passed_sell_in) {
+        $quality = 1;
+        if ($passed_sell_in) {
+            $quality = -($item->quality);
+        } else {
+            if ($item->sellIn <= self::BACKSTAGE_PASS_QUALITY_INC_2) {
+                $quality = 2;
+            }
+            if ($item->sellIn <= self::BACKSTAGE_PASS_QUALITY_INC_3) {
+                $quality = 3;
+            }
+        }
+
+        return $quality;
+    }
 }
