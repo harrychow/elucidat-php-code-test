@@ -11,10 +11,14 @@ class GildedRose
     const MIN_SELLIN = 0;
     const SULFURAS = 'Sulfuras, Hand of Ragnaros';
     const BRIE = 'Aged Brie';
-    const BACKSTAGE_PASSES = 'Backstage passes to a TAFKAL80ETC concert';
-    const BACKSTAGE_PASS_QUALITY_INC_2 = 10;
-    const BACKSTAGE_PASS_QUALITY_INC_3 = 5;
     const MANA_CAKE = 'Conjured Mana Cake';
+    const BACKSTAGE_PASSES = 'Backstage passes to a TAFKAL80ETC concert';
+
+    /** @var int Number of days to check for backstage pass sellin for it to increase quality by 2 */
+    const BACKSTAGE_PASS_QUALITY_INC_2 = 10;
+
+    /** @var int Number of days to check for backstage pass sellin for it to increase quality by 2 */
+    const BACKSTAGE_PASS_QUALITY_INC_3 = 5;
 
     /**
      * GildedRose constructor.
